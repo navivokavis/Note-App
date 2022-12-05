@@ -9,23 +9,47 @@
 /* Begin PBXBuildFile section */
 		F012CF71293A09060009E79F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F012CF70293A09060009E79F /* AppDelegate.swift */; };
 		F012CF73293A09060009E79F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F012CF72293A09060009E79F /* SceneDelegate.swift */; };
-		F012CF75293A09060009E79F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F012CF74293A09060009E79F /* ViewController.swift */; };
+		F012CF75293A09060009E79F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F012CF74293A09060009E79F /* MainViewController.swift */; };
 		F012CF78293A09060009E79F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F012CF76293A09060009E79F /* Main.storyboard */; };
 		F012CF7B293A09060009E79F /* slmax_testovoe_zadanie.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F012CF79293A09060009E79F /* slmax_testovoe_zadanie.xcdatamodeld */; };
 		F012CF7D293A09080009E79F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F012CF7C293A09080009E79F /* Assets.xcassets */; };
 		F012CF80293A09080009E79F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F012CF7E293A09080009E79F /* LaunchScreen.storyboard */; };
+		F012CF88293A09CC0009E79F /* UIView + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F012CF87293A09CC0009E79F /* UIView + ext.swift */; };
+		F012CF8C293A0A1F0009E79F /* NavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F012CF8B293A0A1F0009E79F /* NavBar.swift */; };
+		F042BAE0293A613A0003D504 /* AddNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F042BADF293A613A0003D504 /* AddNoteView.swift */; };
+		F042BAE2293A63360003D504 /* UIColor + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F042BAE1293A63360003D504 /* UIColor + ext.swift */; };
+		F042BAE4293A70AD0003D504 /* MainNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F042BAE3293A70AD0003D504 /* MainNoteView.swift */; };
+		F042BAE6293A7E830003D504 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F042BAE5293A7E830003D504 /* Model.swift */; };
+		F042BAE9293BE60B0003D504 /* String + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F042BAE8293BE60B0003D504 /* String + ext.swift */; };
+		F0B57C01293A12F200C93310 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B57C00293A12F200C93310 /* Resources.swift */; };
+		F0B57C04293A17DA00C93310 /* Raleway-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0B57C02293A17DA00C93310 /* Raleway-Light.ttf */; };
+		F0B57C05293A17DA00C93310 /* Raleway-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0B57C03293A17DA00C93310 /* Raleway-SemiBold.ttf */; };
+		F0B57C08293A3DAF00C93310 /* NotesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B57C07293A3DAF00C93310 /* NotesTableView.swift */; };
+		F0B57C0A293A3F8200C93310 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B57C09293A3F8200C93310 /* NotesTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F012CF6D293A09060009E79F /* slmax-testovoe-zadanie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "slmax-testovoe-zadanie.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F012CF70293A09060009E79F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F012CF72293A09060009E79F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		F012CF74293A09060009E79F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F012CF74293A09060009E79F /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		F012CF77293A09060009E79F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F012CF7A293A09060009E79F /* slmax_testovoe_zadanie.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = slmax_testovoe_zadanie.xcdatamodel; sourceTree = "<group>"; };
 		F012CF7C293A09080009E79F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F012CF7F293A09080009E79F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F012CF81293A09080009E79F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F012CF87293A09CC0009E79F /* UIView + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + ext.swift"; sourceTree = "<group>"; };
+		F012CF8B293A0A1F0009E79F /* NavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBar.swift; sourceTree = "<group>"; };
+		F042BADF293A613A0003D504 /* AddNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteView.swift; sourceTree = "<group>"; };
+		F042BAE1293A63360003D504 /* UIColor + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + ext.swift"; sourceTree = "<group>"; };
+		F042BAE3293A70AD0003D504 /* MainNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNoteView.swift; sourceTree = "<group>"; };
+		F042BAE5293A7E830003D504 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		F042BAE8293BE60B0003D504 /* String + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + ext.swift"; sourceTree = "<group>"; };
+		F0B57C00293A12F200C93310 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		F0B57C02293A17DA00C93310 /* Raleway-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Light.ttf"; sourceTree = "<group>"; };
+		F0B57C03293A17DA00C93310 /* Raleway-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-SemiBold.ttf"; sourceTree = "<group>"; };
+		F0B57C07293A3DAF00C93310 /* NotesTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableView.swift; sourceTree = "<group>"; };
+		F0B57C09293A3F8200C93310 /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,14 +84,66 @@
 			children = (
 				F012CF70293A09060009E79F /* AppDelegate.swift */,
 				F012CF72293A09060009E79F /* SceneDelegate.swift */,
-				F012CF74293A09060009E79F /* ViewController.swift */,
+				F0B57C00293A12F200C93310 /* Resources.swift */,
+				F012CF89293A09EA0009E79F /* Extension */,
+				F012CF8A293A09F60009E79F /* ViewController */,
+				F0B57C06293A3D9C00C93310 /* Views */,
+				F042BAE7293AA51C0003D504 /* TableView */,
+				F042BAE5293A7E830003D504 /* Model.swift */,
 				F012CF76293A09060009E79F /* Main.storyboard */,
 				F012CF7C293A09080009E79F /* Assets.xcassets */,
 				F012CF7E293A09080009E79F /* LaunchScreen.storyboard */,
 				F012CF81293A09080009E79F /* Info.plist */,
 				F012CF79293A09060009E79F /* slmax_testovoe_zadanie.xcdatamodeld */,
+				F0B57C02293A17DA00C93310 /* Raleway-Light.ttf */,
+				F0B57C03293A17DA00C93310 /* Raleway-SemiBold.ttf */,
 			);
 			path = "slmax-testovoe-zadanie";
+			sourceTree = "<group>";
+		};
+		F012CF89293A09EA0009E79F /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				F012CF87293A09CC0009E79F /* UIView + ext.swift */,
+				F042BAE1293A63360003D504 /* UIColor + ext.swift */,
+				F042BAE8293BE60B0003D504 /* String + ext.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		F012CF8A293A09F60009E79F /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F012CF74293A09060009E79F /* MainViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		F042BAE7293AA51C0003D504 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				F0B57C07293A3DAF00C93310 /* NotesTableView.swift */,
+				F0B57C0B293A3F8700C93310 /* TableViewCell */,
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
+		F0B57C06293A3D9C00C93310 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F012CF8B293A0A1F0009E79F /* NavBar.swift */,
+				F042BAE3293A70AD0003D504 /* MainNoteView.swift */,
+				F042BADF293A613A0003D504 /* AddNoteView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F0B57C0B293A3F8700C93310 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				F0B57C09293A3F8200C93310 /* NotesTableViewCell.swift */,
+			);
+			path = TableViewCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -131,6 +207,8 @@
 				F012CF80293A09080009E79F /* LaunchScreen.storyboard in Resources */,
 				F012CF7D293A09080009E79F /* Assets.xcassets in Resources */,
 				F012CF78293A09060009E79F /* Main.storyboard in Resources */,
+				F0B57C04293A17DA00C93310 /* Raleway-Light.ttf in Resources */,
+				F0B57C05293A17DA00C93310 /* Raleway-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,10 +219,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F012CF75293A09060009E79F /* ViewController.swift in Sources */,
+				F012CF75293A09060009E79F /* MainViewController.swift in Sources */,
 				F012CF71293A09060009E79F /* AppDelegate.swift in Sources */,
+				F042BAE4293A70AD0003D504 /* MainNoteView.swift in Sources */,
+				F042BAE0293A613A0003D504 /* AddNoteView.swift in Sources */,
+				F042BAE9293BE60B0003D504 /* String + ext.swift in Sources */,
+				F042BAE2293A63360003D504 /* UIColor + ext.swift in Sources */,
+				F0B57C01293A12F200C93310 /* Resources.swift in Sources */,
+				F042BAE6293A7E830003D504 /* Model.swift in Sources */,
+				F0B57C08293A3DAF00C93310 /* NotesTableView.swift in Sources */,
 				F012CF73293A09060009E79F /* SceneDelegate.swift in Sources */,
 				F012CF7B293A09060009E79F /* slmax_testovoe_zadanie.xcdatamodeld in Sources */,
+				F012CF88293A09CC0009E79F /* UIView + ext.swift in Sources */,
+				F012CF8C293A0A1F0009E79F /* NavBar.swift in Sources */,
+				F0B57C0A293A3F8200C93310 /* NotesTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
