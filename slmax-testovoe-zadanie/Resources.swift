@@ -10,6 +10,8 @@ import UIKit
 enum Resources {
     
     enum Colors {
+        static var blackText = UIColor(hexString: "#000000")
+        static var whiteText = UIColor(hexString: "#FFFFFF")
         static var separate = UIColor(hexString: "#D2D2D2")
         static var dateTextColor = UIColor(hexString: "#8F8F8F")
         static var redDeleteColor = UIColor(hexString: "#E30000")
