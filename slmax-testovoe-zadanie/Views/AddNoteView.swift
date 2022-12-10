@@ -6,19 +6,19 @@
 //
 
 import UIKit
+import RxSwift
 
 class AddNoteView: UIView {
-    
-    var addNewNote: ((Note) -> Void)?
-    
+        
     var titleTextField = UITextField()
     var separateView = UIView()
     var descriptionTextField = UITextField()
     var arrowButton = UIButton()
     var currentDate = Date()
     var dateFormatter = DateFormatter()
+    var dateTextInLabel = String()
     var notesTableView = NotesTableView()
-    
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -43,26 +43,27 @@ class AddNoteView: UIView {
     }
     
     func configureSubviews() {
-        backgroundColor = .white
+        backgroundColor = Resources.Colors.whiteBackground
         layer.borderWidth = 1
-        layer.borderColor = UIColor.black.withAlphaComponent(0.2).cgColor
+        layer.borderColor = Resources.Colors.blackBackground.withAlphaComponent(0.2).cgColor
         layer.cornerRadius = 10
         
-        titleTextField.placeholder = "Название"
+        titleTextField.placeholder = LocalizedString.AddNoteView.titleInput
         titleTextField.font = Resources.Fonts.RalewaySemiBold(with: 14)
         titleTextField.delegate = self
         
         separateView.backgroundColor = Resources.Colors.separate
         
-        descriptionTextField.placeholder = "Текст описание"
+        descriptionTextField.placeholder = LocalizedString.AddNoteView.descriptionInput
         descriptionTextField.font = Resources.Fonts.RalewayLight(with: 10)
         
         arrowButton.setImage(Resources.Images.rightArrow?.withRenderingMode(.alwaysTemplate), for: .normal)
         arrowButton.imageView?.contentMode = .scaleAspectFill
-        arrowButton.tintColor = .black
-        arrowButton.addTarget(self, action: #selector(arrowButtonTapped), for: .touchUpInside)
+        arrowButton.tintColor = Resources.Colors.blackBackground
+//        arrowButton.addTarget(self, action: #selector(arrowButtonTapped), for: .touchUpInside)
         
         dateFormatter.dateFormat = "dd.MM.yyyy"
+        dateTextInLabel = dateFormatter.string(from: currentDate)
     }
     
     func layoutConstraint() {
@@ -72,17 +73,16 @@ class AddNoteView: UIView {
             titleTextField.topAnchor.constraint(equalTo: topAnchor, constant: 17),
             titleTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 21),
             titleTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -27),
-
+            
             separateView.centerYAnchor.constraint(equalTo: centerYAnchor),
             separateView.heightAnchor.constraint(equalToConstant: 1),
             separateView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 17),
             separateView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -27),
             
-//            descriptionTextField.topAnchor.constraint(equalTo: separateView.bottomAnchor, constant: 10),
             descriptionTextField.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -19),
             descriptionTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 21),
             descriptionTextField.trailingAnchor.constraint(equalTo: arrowButton.trailingAnchor, constant: -5),
-
+            
             arrowButton.centerYAnchor.constraint(equalTo: descriptionTextField.centerYAnchor),
             arrowButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -27),
             arrowButton.heightAnchor.constraint(equalToConstant: 9),
@@ -90,27 +90,15 @@ class AddNoteView: UIView {
         ])
     }
     
-    @objc func arrowButtonTapped() {
-        if titleTextField.text != "" {
-
-            let note: Note = .init(isOpen: false,
-                                   title: titleTextField.text ?? "empty",
-                                   description:  descriptionTextField.text ?? "empty",
-                                   time: dateFormatter.string(from: currentDate))
-            
-            addNewNote?(note)
-        
-        }
-        
-        titleTextField.text = ""
-        descriptionTextField.text = ""
+    func arrowButtonTapped(_ action: Selector, with target: Any?) {
+        arrowButton.addTarget(target, action: (action), for: .touchUpInside)
     }
     
 }
 
 extension AddNoteView: UITextFieldDelegate {
     
-    //limit textField Characters
+    //MARK: limit textField Characters
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let newString = NSString(string: titleTextField.text!).replacingCharacters(in: range, with: string)
@@ -127,4 +115,14 @@ extension AddNoteView: UITextFieldDelegate {
         return true
     }
     
+    //MARK: Hide keyboard when press RETURN
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.titleTextField.endEditing(true)
+        self.descriptionTextField.endEditing(true)
+        return false
+    }
+    
 }
+
+

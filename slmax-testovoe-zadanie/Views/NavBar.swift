@@ -31,16 +31,15 @@ class NavBar: UIView {
     func buildHierarchy() {
         setupViews(hatImage)
         setupViews(hatTextLable)
-//        addSubview(view)
     }
     
     func configureSubviews() {
         hatImage.image = Resources.Images.hatImage
         hatImage.contentMode = .scaleAspectFill
         
-        hatTextLable.text = Resources.Strings.hatString
+        hatTextLable.text = LocalizedString.NavBar.hatString
         hatTextLable.font = Resources.Fonts.RalewaySemiBold(with: 28)
-        hatTextLable.textColor = .white
+        hatTextLable.textColor = Resources.Colors.whiteText
         
     }
     

@@ -6,17 +6,19 @@
 //
 
 import UIKit
+import RxSwift
 
 class NotesTableView: UIView {
-    
-    var deleteCell: ((String) -> Void)?
-    
+        
     var notesTableView = UITableView(frame: .zero, style: .grouped)
-    var newArrayFromNotesArray = [Note]() {
+    var notesArray = [Note]() {
         didSet {
             self.notesTableView.reloadData()
         }
     }
+    
+    var bag = DisposeBag()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,7 +45,7 @@ class NotesTableView: UIView {
         notesTableView.delegate = self
         notesTableView.dataSource = self
         notesTableView.separatorColor = .clear
-        notesTableView.backgroundColor = .white
+        notesTableView.backgroundColor = Resources.Colors.whiteBackground
         notesTableView.showsVerticalScrollIndicator = false
         
     }
@@ -61,23 +63,42 @@ class NotesTableView: UIView {
         notesTableView.reloadData()
     }
     
-    // func to open-close section
-    func changeBool(tag: Int) {
-        
-        let isOpen = newArrayFromNotesArray[tag].isOpen
-        newArrayFromNotesArray[tag].isOpen = !isOpen
-        
-    }
+//    @objc func addCommentButtonTapped() {
+//        print("SD")
+//        var addCommentView = AddCommentView()
+//        setupViews(addCommentView)
+//        addCommentView.alpha = 0
+//
+//        NSLayoutConstraint.activate([
+//            addCommentView.topAnchor.constraint(equalTo: topAnchor),
+//            addCommentView.bottomAnchor.constraint(equalTo: bottomAnchor),
+//            addCommentView.trailingAnchor.constraint(equalTo: trailingAnchor),
+//            addCommentView.leadingAnchor.constraint(equalTo: leadingAnchor)
+//        ])
+//
+//        if addCommentView.alpha == 0 {
+//            addCommentView.alpha = 1
+//        } else {
+//            addCommentView.alpha = 0
+//        }
+//    }
+//    
+//    @objc func backgroundTapped() {
+//        print("dfds")
+//        var addCommentView = AddCommentView()
+//        addCommentView.alpha = 0
+//    }
     
 }
 
 //MARK: - TableView Delegate and DataSource
+
 extension NotesTableView: UITableViewDelegate, UITableViewDataSource {
     
-    //MARK: - Section
+    //MARK: Section
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return newArrayFromNotesArray.count
+        return notesArray.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -85,18 +106,28 @@ extension NotesTableView: UITableViewDelegate, UITableViewDataSource {
         
         noteView.tag = section
         
-        //delete section with closure
-        noteView.deleteCell = { [weak self] deleteTitle in
-            self?.deleteCell?(deleteTitle)
-        }
+        //MARK: delete section with RxSwift
         
-        //open-clouse with closure
-        noteView.sectionIsOpen = { [weak self] change in
-            self?.changeBool(tag: change)
-        }
+        noteView.deleteSectionObservable.subscribe { [weak self] event in
+            guard let self = self else { return }
+            if let index = self.notesArray.firstIndex(where: {$0.title == event}) {
+                self.notesArray.remove(at: index)
+            }
+        }.disposed(by: bag)
         
-        noteView.headerLabel.text = newArrayFromNotesArray[section].title
-        noteView.notesLabel.text = newArrayFromNotesArray[section].description
+        //MARK: open-close with RxSwift
+        
+        noteView.tagObservable.subscribe { [weak self] event in
+            print(event)
+            
+            let isOpen = self!.notesArray[event].isOpen
+            print(isOpen)
+            self!.notesArray[event].isOpen = !isOpen
+            print(self!.notesArray)
+        }.disposed(by: bag)
+        
+        noteView.headerLabel.text = notesArray[section].title
+        noteView.notesLabel.text = notesArray[section].description
         return noteView
     }
     
@@ -105,11 +136,11 @@ extension NotesTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     
-    //MARK: - Row
+    //MARK: Row
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rowNumber = 0
-        if !newArrayFromNotesArray[section].isOpen {
+        if !notesArray[section].isOpen {
             rowNumber = 0
         } else {
             rowNumber = 1
@@ -126,10 +157,12 @@ extension NotesTableView: UITableViewDelegate, UITableViewDataSource {
             fatalError()
         }
         
-        let rowData = newArrayFromNotesArray[indexPath.section]
+        let rowData = notesArray[indexPath.section]
         cell.fullDescriptionLabel.text = rowData.description
         cell.dateLabel.text = rowData.time
-        
+                
+//        cell.addCommentButtonTapped(#selector(addCommentButtonTapped), with: self)
+//        cell.backgroundView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backgroundTapped)))
         return cell
     }
     

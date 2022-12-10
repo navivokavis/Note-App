@@ -1,0 +1,31 @@
+/* 
+  Localizable.strings
+  slmax-testovoe-zadanie
+
+  Created by Navi Vokavis on 8.12.22.
+  
+*/
+
+// MARK: - NavBar
+
+"hatString" = "Заметки";
+
+// MARK: - MainViewController
+
+"alertMessage" = "Введите название заметки";
+"alertAction" = "Понятно";
+
+// MARK: - MainNoteView
+
+"deleteButton" = "Удалить";
+
+// MARK: - AddNoteView
+
+"titleInput" = "Название";
+"descriptionInput" = "Текст описания";
+
+// Mark: - AddCommentView
+
+"titleTextLabel" = "Добавьте комментарий к заметке";
+"commentTitleTextField" = " Название комментария";
+"commentDescriptionTextView" = "Комментарий";

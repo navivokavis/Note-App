@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class MainViewController: UIViewController {
     
@@ -13,11 +14,9 @@ class MainViewController: UIViewController {
     var tableView = NotesTableView()
     var addNoteView = AddNoteView()
     var mainNoteView = MainNoteView()
-    var notesArray: [Note] = []
     
     var newNoteBottomConstraint: NSLayoutConstraint!
-    
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,31 +39,9 @@ class MainViewController: UIViewController {
     }
     
     func configureSubviews() {
-        view.backgroundColor = .white
+        view.backgroundColor = Resources.Colors.whiteBackground
         
-        // обрабатываю замыкание и ловлю новую заметку
-        addNoteView.addNewNote = { [weak self] note in
-            guard let self = self else { return }
-            self.notesArray.append(note)
-            
-            self.tableView.newArrayFromNotesArray = self.notesArray
-            print(self.tableView.newArrayFromNotesArray)
-        }
-        
-        tableView.deleteCell = { [weak self] deletedTitle in
-            guard let self = self else { return }
-            
-            if let index = self.notesArray.firstIndex(where: {$0.title == deletedTitle}) {
-                self.notesArray.remove(at: index)
-                self.tableView.newArrayFromNotesArray = self.notesArray
-            }
-        }
-        
-//                mainNoteView.sectionIsOpen = { [weak self] changeBool in
-//                    guard let self = self else { return }
-//                    self.notesArray[0].open
-//
-//                }
+        addNoteView.arrowButtonTapped(#selector(arrowButtonTapped), with: self)
     }
     
     func layoutConstraint() {
@@ -74,22 +51,48 @@ class MainViewController: UIViewController {
             navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             navBar.heightAnchor.constraint(equalToConstant: 200),
             
-            tableView.topAnchor.constraint(equalTo: navBar.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 21),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: addNoteView.topAnchor, constant: -20),
             
-            
             addNoteView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             addNoteView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)
-            //        lowerNoteView.heightAnchor.constraint(equalToConstant: 200),
         ])
         
         newNoteBottomConstraint = addNoteView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40)
         newNoteBottomConstraint.isActive = true
     }
     
+    //MARK: Add text from input to array
     
+    @objc func arrowButtonTapped() {
+        if addNoteView.titleTextField.text != "" {
+
+            let note: Note = .init(isOpen: false,
+                                   title: addNoteView.titleTextField.text ?? "empty",
+                                   description:  addNoteView.descriptionTextField.text ?? "empty",
+                                   time: addNoteView.dateTextInLabel,
+                                   comment: [])
+
+            tableView.notesArray.append(note)
+            addNoteView.titleTextField.text = ""
+            addNoteView.descriptionTextField.text = ""
+        } else {
+            showAlert()
+        }
+        
+    }
+    
+    func showAlert() {
+        let alertController = UIAlertController(title: "", message: LocalizedString.MainViewController.alertMessage, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: LocalizedString.MainViewController.alertAction, style: .default)
+            alertController.addAction(alertAction)
+        self.present(alertController, animated: true)
+        }
+    
+    
+    //MARK: newNoteView up with keyboard
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -114,9 +117,10 @@ class MainViewController: UIViewController {
 }
 
 
-
-//hide keyboard by tap
 extension UIViewController {
+    
+    //MARK: hide keyboard by tap Return
+    
     func hideKeyboardWhenTappedAround() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false
@@ -126,6 +130,36 @@ extension UIViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    func showCommentView() {
+        var addCommentView = AddCommentView()
+        view.setupViews(addCommentView)
+        addCommentView.alpha = 0
+        
+        NSLayoutConstraint.activate([
+            addCommentView.topAnchor.constraint(equalTo: view.topAnchor),
+            addCommentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            addCommentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            addCommentView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+        ])
+        
+        if addCommentView.alpha == 0 {
+            addCommentView.alpha = 1
+        } else {
+            addCommentView.alpha = 0
+        }
+    }
+    
+    //MARK: show Views on Root Controller (if in SceneDelegate we have UINavigationController - 1 func we dont need)
+    
+    func embeddedInNavigationController() -> UINavigationController {
+            let navigationController = UINavigationController(rootViewController: self)
+            return navigationController
+        }
+    
 }
-
+//show Views on Root Controller
+func getRootNavigationController() -> UINavigationController? {
+    return UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController as? UINavigationController ?? UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController?.navigationController
+}
 

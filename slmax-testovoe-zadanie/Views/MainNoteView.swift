@@ -6,11 +6,9 @@
 //
 
 import UIKit
+import RxSwift
 
 class MainNoteView: UIView {
-    
-    var deleteCell: ((String) -> Void)?
-    var sectionIsOpen: ((Int) -> Void)?
     
     var contentView = UIView()
     var headerLabel = UILabel()
@@ -29,6 +27,9 @@ class MainNoteView: UIView {
     var timer = Timer()
     var isTimeLabelShow = false
     var timeButtonTrailingConstraint: NSLayoutConstraint!
+    
+    var tagObservable = PublishSubject<Int>()
+    var deleteSectionObservable = PublishSubject<String>()
         
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -59,20 +60,20 @@ class MainNoteView: UIView {
     func configureSubviews() {
         contentView.layer.cornerRadius = 5
         contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.black.withAlphaComponent(0.2).cgColor
-        contentView.backgroundColor = .white
+        contentView.layer.borderColor = Resources.Colors.blackBackground.withAlphaComponent(0.2).cgColor
+        contentView.backgroundColor = Resources.Colors.whiteBackground
         
         headerLabel.font = Resources.Fonts.RalewaySemiBold(with: 14)
         headerLabel.adjustsFontSizeToFitWidth = true
         
-        line.backgroundColor = .black
+        line.backgroundColor = Resources.Colors.blackBackground
         
         notesLabel.font = Resources.Fonts.RalewayLight(with: 8)
         
         arrowButton.setImage(Resources.Images.downArrow?.withRenderingMode(.alwaysTemplate), for: .normal)
         arrowButton.imageView?.contentMode = .scaleAspectFit
         
-        arrowButton.tintColor = .black
+        arrowButton.tintColor = Resources.Colors.blackBackground
         
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(sectionSwipeLeft))
         swipeLeft.direction = .left
@@ -81,14 +82,14 @@ class MainNoteView: UIView {
         
         deleteButton.backgroundColor = Resources.Colors.redDeleteColor
         deleteButton.layer.cornerRadius = 5
-        deleteButton.setTitle("Удалить", for: .normal)
-        deleteButton.setTitleColor(.white, for: .normal)
+        deleteButton.setTitle(LocalizedString.MainNoteView.deleteButton, for: .normal)
+        deleteButton.setTitleColor(Resources.Colors.whiteText, for: .normal)
         deleteButton.titleLabel?.font = Resources.Fonts.RalewaySemiBold(with: 14)
         deleteButton.addTarget(self, action: #selector(deteteButtonTapped), for: .touchUpInside)
         
         timeLabel.backgroundColor = Resources.Colors.redDeleteColor
         timeLabel.textAlignment = .center
-        timeLabel.textColor = .white
+        timeLabel.textColor = Resources.Colors.whiteText
         timeLabel.text = "\(time)"
         timeLabel.layer.cornerRadius = 5
         timeLabel.layer.masksToBounds = true
@@ -171,7 +172,7 @@ class MainNoteView: UIView {
             time = 5
             hideTimer()
         } else {
-            sectionIsOpen?(tag)
+            tagObservable.onNext(tag)
         }
     }
     
@@ -198,7 +199,7 @@ class MainNoteView: UIView {
         time -= 1
         
         if time == 0 {
-            deleteCell?(headerLabel.text ?? "")
+            deleteSectionObservable.onNext(headerLabel.text ?? "")
             timer.invalidate()
         }
     }
