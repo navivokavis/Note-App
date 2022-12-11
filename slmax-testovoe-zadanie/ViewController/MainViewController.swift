@@ -64,6 +64,7 @@ class MainViewController: UIViewController {
         newNoteBottomConstraint.isActive = true
     }
     
+    
     //MARK: Add text from input to array
     
     @objc func arrowButtonTapped() {
@@ -76,8 +77,12 @@ class MainViewController: UIViewController {
                                    comment: [])
 
             tableView.notesArray.append(note)
+            
             addNoteView.titleTextField.text = ""
             addNoteView.descriptionTextField.text = ""
+//            dict = [note: []]
+//            print("DICTIONARY \(dict)")
+//            print(dict.count)
         } else {
             showAlert()
         }
@@ -131,11 +136,15 @@ extension UIViewController {
         view.endEditing(true)
     }
     
-    func showCommentView() {
+    //MARK: show AddCommentView on Root Controller 
+    
+    func showCommentView(newComment: @escaping (Comment) -> Void?) {
         var addCommentView = AddCommentView()
         view.setupViews(addCommentView)
         addCommentView.alpha = 0
-        
+        addCommentView.commentOut = { [weak self] comment in
+            newComment(comment)
+        }
         NSLayoutConstraint.activate([
             addCommentView.topAnchor.constraint(equalTo: view.topAnchor),
             addCommentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),

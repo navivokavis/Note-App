@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct Note {
+struct Note: Hashable {
     var isOpen: Bool
     var title: String
     var description: String
     var time: String
-    var comment: [String]
+    var comment: [Comment]
     
 //    init(isOpen: Bool, title: String, description: String, time: String, comment: [String]) {
 //        self.isOpen = isOpen
@@ -27,9 +27,12 @@ struct Note {
 //var newArrayFromNotesArray: [Note] = []
 
 
-struct Comment {
-    var CommentTitle: String
-    var CommentDescription: String
-    var CommentDate: String
+struct Comment: Hashable {
+    var commentTitle: String
+    var commentDescription: String
+    var commentDate: String
 }
 
+var commentArray2: [Comment] = []
+
+var dict: [Note: [Comment]] = [:]

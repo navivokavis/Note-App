@@ -60,7 +60,6 @@ class AddNoteView: UIView {
         arrowButton.setImage(Resources.Images.rightArrow?.withRenderingMode(.alwaysTemplate), for: .normal)
         arrowButton.imageView?.contentMode = .scaleAspectFill
         arrowButton.tintColor = Resources.Colors.blackBackground
-//        arrowButton.addTarget(self, action: #selector(arrowButtonTapped), for: .touchUpInside)
         
         dateFormatter.dateFormat = "dd.MM.yyyy"
         dateTextInLabel = dateFormatter.string(from: currentDate)
@@ -98,7 +97,7 @@ class AddNoteView: UIView {
 
 extension AddNoteView: UITextFieldDelegate {
     
-    //MARK: limit textField Characters
+    // limit textField Characters
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let newString = NSString(string: titleTextField.text!).replacingCharacters(in: range, with: string)

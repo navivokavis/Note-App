@@ -7,9 +7,31 @@
 
 import UIKit
 
+//size of tableView
+class SelfSizingTableView: UITableView {
+    override var contentSize: CGSize {
+        didSet {
+            invalidateIntrinsicContentSize()
+            setNeedsLayout()
+        }
+    }
+
+    override var intrinsicContentSize: CGSize {
+        let height = min(.infinity, contentSize.height)
+        return CGSize(width: contentSize.width, height: height)
+    }
+}
+
+
+
 class CommentTableView: UIView {
         
     var commentTableView = SelfSizingTableView(frame: .zero, style: .grouped)
+    var commentArray: [Comment] = []{
+        didSet{
+            commentTableView.reloadData()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,10 +73,6 @@ class CommentTableView: UIView {
         ])
     }
     
-//    func reloadTable() {
-//        commentTableView.reloadData()
-//    }
-    
 }
 
 //MARK: - TableView Delegate and DataSource
@@ -78,7 +96,7 @@ extension CommentTableView: UITableViewDelegate, UITableViewDataSource {
     //MARK: - Row
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return commentArray.count
     }
     
     
@@ -89,6 +107,11 @@ extension CommentTableView: UITableViewDelegate, UITableViewDataSource {
                 as? CommentTableViewCell else {
             fatalError()
         }
+        
+        let rowData = commentArray[indexPath.row]
+        cell.commentTitleLabel.text = rowData.commentTitle
+        cell.commentDescriptionLabel.text = rowData.commentDescription
+        cell.commentDateLabel.text = rowData.commentDate
         return cell
     }
     

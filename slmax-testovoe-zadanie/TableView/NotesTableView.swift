@@ -82,7 +82,7 @@ class NotesTableView: UIView {
 //            addCommentView.alpha = 0
 //        }
 //    }
-//    
+//
 //    @objc func backgroundTapped() {
 //        print("dfds")
 //        var addCommentView = AddCommentView()
@@ -124,6 +124,7 @@ extension NotesTableView: UITableViewDelegate, UITableViewDataSource {
             print(isOpen)
             self!.notesArray[event].isOpen = !isOpen
             print(self!.notesArray)
+
         }.disposed(by: bag)
         
         noteView.headerLabel.text = notesArray[section].title
@@ -157,12 +158,15 @@ extension NotesTableView: UITableViewDelegate, UITableViewDataSource {
             fatalError()
         }
         
-        let rowData = notesArray[indexPath.section]
-        cell.fullDescriptionLabel.text = rowData.description
-        cell.dateLabel.text = rowData.time
-                
-//        cell.addCommentButtonTapped(#selector(addCommentButtonTapped), with: self)
-//        cell.backgroundView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backgroundTapped)))
+        cell.getComment = { [weak self] newComment in
+            self?.notesArray[indexPath.section].comment.append(newComment)
+            self?.reloadTable()
+        }
+//        cell.note = notesArray[indexPath.section]
+        cell.setupCell(note: notesArray[indexPath.section])
+//        cell.fullDescriptionLabel.text = rowData.description
+//        cell.dateLabel.text = rowData.time
+//        cell.commentTableView.commentArray = rowData.comment
         return cell
     }
     

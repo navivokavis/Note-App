@@ -13,7 +13,7 @@ class CommentTableViewCell: UITableViewCell {
     var commentTitleLabel = UILabel()
     var commentDescriptionLabel = UILabel()
     var commentDateLabel = UILabel()
-    var answerOnCommentButton = UIButton()
+//    var answerOnCommentButton = UIButton()
    
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -37,7 +37,7 @@ class CommentTableViewCell: UITableViewCell {
         contentView.setupViews(commentTitleLabel)
         contentView.setupViews(commentDescriptionLabel)
         contentView.setupViews(commentDateLabel)
-        contentView.setupViews(answerOnCommentButton)
+//        contentView.setupViews(answerOnCommentButton)
     }
     
     func configureSubviews() {
@@ -49,23 +49,20 @@ class CommentTableViewCell: UITableViewCell {
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = Resources.Colors.separate.cgColor
         
-        commentTitleLabel.text = "notesArray.description.maxLength(length: 1)"
         commentTitleLabel.textColor = Resources.Colors.blackText
-        commentTitleLabel.font = Resources.Fonts.RalewaySemiBold(with: 10)
+        commentTitleLabel.font = Resources.Fonts.RalewaySemiBold(with: 14)
         
-        commentDescriptionLabel.text = "notesArray.descriptionnotesArray.descriptionnotesArray.descriptionnotesArray.descriptionnotesArray.descriptionnotesArray.descriptionnotesArray.descriptionnotesArray.descriptionnotesArray.descriptionnotesArray.descriptionnotesArray.description"
         commentDescriptionLabel.numberOfLines = 0
         commentDescriptionLabel.lineBreakMode = .byWordWrapping
         commentDescriptionLabel.textColor = Resources.Colors.blackText
-        commentDescriptionLabel.font = Resources.Fonts.RalewayLight(with: 8)
+        commentDescriptionLabel.font = Resources.Fonts.RalewayLight(with: 12)
         
-        commentDateLabel.text = "22.222.2...2"
         commentDateLabel.textColor = Resources.Colors.dateTextColor
         commentDateLabel.font = Resources.Fonts.RalewayLight(with: 7)
         
-        answerOnCommentButton.setTitle("Ответить", for: .normal)
-        answerOnCommentButton.setTitleColor(Resources.Colors.dateTextColor, for: .normal)
-        answerOnCommentButton.titleLabel?.font = Resources.Fonts.RalewaySemiBold(with: 7)
+//        answerOnCommentButton.setTitle("Ответить", for: .normal)
+//        answerOnCommentButton.setTitleColor(Resources.Colors.dateTextColor, for: .normal)
+//        answerOnCommentButton.titleLabel?.font = Resources.Fonts.RalewaySemiBold(with: 7)
                 
     }
     
@@ -73,21 +70,22 @@ class CommentTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
             contentView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: answerOnCommentButton.bottomAnchor, constant: 7),
+            contentView.bottomAnchor.constraint(equalTo: commentDateLabel.bottomAnchor, constant: 7),
             
             commentTitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 11),
             commentTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 11),
             commentTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -11),
             
-            commentDescriptionLabel.topAnchor.constraint(equalTo: commentTitleLabel.bottomAnchor, constant: 5),
+            commentDescriptionLabel.topAnchor.constraint(equalTo: commentTitleLabel.bottomAnchor, constant: 8),
             commentDescriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -11),
             commentDescriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 11),
             
             commentDateLabel.topAnchor.constraint(equalTo: commentDescriptionLabel.bottomAnchor, constant: 5),
             commentDateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 11),
+            commentDateLabel.heightAnchor.constraint(equalToConstant: 7)
             
-            answerOnCommentButton.centerYAnchor.constraint(equalTo: commentDateLabel.centerYAnchor),
-            answerOnCommentButton.leadingAnchor.constraint(equalTo: commentDateLabel.trailingAnchor, constant: 10),
+//            answerOnCommentButton.centerYAnchor.constraint(equalTo: commentDateLabel.centerYAnchor),
+//            answerOnCommentButton.leadingAnchor.constraint(equalTo: commentDateLabel.trailingAnchor, constant: 10),
 
         ])
     }

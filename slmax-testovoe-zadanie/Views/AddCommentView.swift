@@ -9,17 +9,27 @@ import UIKit
 
 class AddCommentView: UIView {
     
+    var commentOut: ((Comment) -> Void)?
+    
     var backgroundView = UIButton()
     var windowView = UIView()
     var titleTextLabel = UILabel()
     var commentTitleTextField = UITextField()
     var commentDescriptionTextView = UITextView()
     var addCommentButton = UIButton()
+    var currentDate = Date()
+    var dateFormatter = DateFormatter()
+    var dateTextInLabel = String()
     
+    var tableView = NotesTableView()
+    var commentTableView = CommentTableView()
+    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setup()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -30,6 +40,8 @@ class AddCommentView: UIView {
         buildHierarchy()
         configureSubviews()
         layoutConstraint()
+        
+
     }
     
     func buildHierarchy() {
@@ -55,7 +67,7 @@ class AddCommentView: UIView {
         commentTitleTextField.placeholder = LocalizedString.AddCommentView.commentTitleTextField
         commentTitleTextField.font = Resources.Fonts.RalewayLight(with: 15)
         commentTitleTextField.layer.cornerRadius = 5
-        commentTitleTextField.layer.borderWidth = 1
+        commentTitleTextField.layer.borderWidth = 0.5
         commentTitleTextField.layer.borderColor = Resources.Colors.separate.cgColor
         
         commentDescriptionTextView.layer.cornerRadius = 5
@@ -68,10 +80,43 @@ class AddCommentView: UIView {
         
         addCommentButton.setImage(Resources.Images.paperplaneFill?.withRenderingMode(.alwaysTemplate), for: .normal)
         addCommentButton.tintColor = Resources.Colors.addCommentGray
+        addCommentButton.addTarget(self, action: #selector(saveComment), for: .touchUpInside)
         
         backgroundView.addTarget(self, action: #selector(hideView), for: .touchUpInside)
         
+        dateFormatter.dateFormat = "dd.MM.yyyy HH.MM"
+        dateTextInLabel = dateFormatter.string(from: currentDate)
+        
     }
+    
+    @objc func saveComment() {
+        
+        self.endEditing(true)
+        if commentTitleTextField.text != "" || commentDescriptionTextView.text != ""  {
+            
+            let noteComment: Comment = .init(
+                commentTitle: commentTitleTextField.text ?? "",
+                commentDescription: stringCommentDescription() ,
+                commentDate: dateTextInLabel
+            )
+            
+            commentOut?(noteComment)
+        }
+        
+        func stringCommentDescription() -> String {
+            var desctiotionText = ""
+            if commentDescriptionTextView.text == LocalizedString.AddCommentView.commentDescriptionTextView {
+                desctiotionText = ""
+            } else {
+                desctiotionText = commentDescriptionTextView.text
+            }
+            return desctiotionText
+        }
+        commentTitleTextField.text = ""
+        commentDescriptionTextView.text = ""
+        self.removeFromSuperview()
+    }
+    
     
     @objc func hideView() {
         self.endEditing(true)
@@ -92,11 +137,11 @@ class AddCommentView: UIView {
             windowView.widthAnchor.constraint(equalToConstant: 300),
             windowView.heightAnchor.constraint(equalToConstant: 200),
             
-            titleTextLabel.topAnchor.constraint(equalTo: windowView.topAnchor, constant: 8),
+            titleTextLabel.topAnchor.constraint(equalTo: windowView.topAnchor, constant: 10),
             titleTextLabel.leadingAnchor.constraint(equalTo: windowView.leadingAnchor, constant: 10),
             titleTextLabel.trailingAnchor.constraint(equalTo: windowView.trailingAnchor, constant: -10),
             
-            commentTitleTextField.topAnchor.constraint(equalTo: titleTextLabel.bottomAnchor, constant: 10),
+            commentTitleTextField.topAnchor.constraint(equalTo: titleTextLabel.bottomAnchor, constant: 20),
             commentTitleTextField.leadingAnchor.constraint(equalTo: windowView.leadingAnchor, constant: 10),
             commentTitleTextField.trailingAnchor.constraint(equalTo: addCommentButton.leadingAnchor, constant: -5),
             
@@ -125,7 +170,7 @@ extension AddCommentView: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if commentDescriptionTextView.text.isEmpty {
-            commentDescriptionTextView.text = "Placeholder"
+            commentDescriptionTextView.text = LocalizedString.AddCommentView.commentDescriptionTextView
             commentDescriptionTextView.textColor = UIColor.lightGray
         }
     }

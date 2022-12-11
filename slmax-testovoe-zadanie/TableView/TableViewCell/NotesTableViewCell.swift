@@ -10,13 +10,19 @@ import RxSwift
 
 class NotesTableViewCell: UITableViewCell {
     
+    var getComment: ((Comment) -> Void)?
+    
     static let identifier = "NotesTableViewCell"
     var dateLabel = UILabel()
     var fullDescriptionLabel = UILabel()
     var addCommentButton = UIButton()
+    var note: Note? {
+        didSet {
+
+        }
+    }
     
     var commentTableView = CommentTableView()
-    var obs = PublishSubject<Selector>()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -49,17 +55,25 @@ class NotesTableViewCell: UITableViewCell {
         dateLabel.textColor = Resources.Colors.dateTextColor
         dateLabel.font = Resources.Fonts.RalewayLight(with: 8)
         
+        
         fullDescriptionLabel.numberOfLines = 0
         fullDescriptionLabel.lineBreakMode = .byWordWrapping
-        fullDescriptionLabel.font = Resources.Fonts.RalewayLight(with: 10)
+        fullDescriptionLabel.font = Resources.Fonts.RalewayLight(with: 12)
+        
         
         addCommentButton.setImage(Resources.Images.plus?.withRenderingMode(.alwaysTemplate), for: .normal)
         addCommentButton.tintColor = Resources.Colors.addCommentGray
-//        addCommentButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapa)))
         addCommentButton.addTarget(self, action: #selector(addCommentButtonTapped), for: .touchUpInside)
-        
+
     }
     
+    func setupCell(note: Note) {
+        fullDescriptionLabel.text = note.description
+        dateLabel.text = note.time
+        commentTableView.commentArray = note.comment
+
+    }
+
     func layoutConstraint() {
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: topAnchor),
@@ -72,8 +86,6 @@ class NotesTableViewCell: UITableViewCell {
             
             addCommentButton.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 7),
             addCommentButton.centerXAnchor.constraint(equalTo: dateLabel.centerXAnchor),
-//            addCommentButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -26),
-//            addCommentButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 17),
             
             fullDescriptionLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 27),
             fullDescriptionLabel.trailingAnchor.constraint(equalTo: addCommentButton.leadingAnchor, constant: -6),
@@ -82,40 +94,20 @@ class NotesTableViewCell: UITableViewCell {
             commentTableView.topAnchor.constraint(equalTo: fullDescriptionLabel.bottomAnchor, constant: 25),
             commentTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             commentTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//            commentTableView.heightAnchor.constraint(equalToConstant: 150),
-            
-//            addCommentView.topAnchor.constraint(equalTo: self.topAnchor),
-//            addCommentView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            addCommentView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//            addCommentView.heightAnchor.constraint(equalToConstant: 150)
+//            commentTableView.heightAnchor.constraint(equalToConstant: 200)
         ])
     }
-    
-    
-//    func addCommentButtonTapped(_ action: Selector, with target: Any?) {
-//        addCommentButton.addTarget(target, action: (action), for: .touchUpInside)
-//    }
+
 
     @objc func addCommentButtonTapped() {
-//        obs.on(#selector(addCommentButtonTapped))
-        getRootNavigationController()?.showCommentView()
-print("HI")
+        getRootNavigationController()?.showCommentView(newComment: { [weak self] comment in
+//            self?.commentTableView.commentArray.append(comment)
+//            self?.commentTableView.commentTableView.reloadData()
+            guard let self = self else { return }
+            self.getComment?(comment)
+        })
     }
     
-}
-
-class SelfSizingTableView: UITableView {
-    override var contentSize: CGSize {
-        didSet {
-            invalidateIntrinsicContentSize()
-            setNeedsLayout()
-        }
-    }
-
-    override var intrinsicContentSize: CGSize {
-        let height = min(.infinity, contentSize.height)
-        return CGSize(width: contentSize.width, height: height)
-    }
 }
 
     
